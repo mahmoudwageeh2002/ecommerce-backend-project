@@ -10,5 +10,12 @@ export const connectDB = async () => {
       console.log("MongoDB connected");
 
         console.log("MongoDB connected");
+          console.log("MongoDB connected");
+    console.log("MongoDB connected");
+
+      console.log("MongoDB connected");
+
+        console.log("MongoDB connected");
+
 
 };
