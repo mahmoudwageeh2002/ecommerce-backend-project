@@ -5,8 +5,7 @@ import {
 import { ApiError } from "../../utils/ApiError.js";
 
 import {
-  signAccessToken,
-  signRefreshToken,
+  signAccessToken,signRefreshToken,
   verifyRefreshToken,
 } from "../../utils/jwt.js";
 
