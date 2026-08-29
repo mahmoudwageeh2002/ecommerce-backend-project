@@ -5,7 +5,7 @@ import {
   paginationQuerySchema,
 } from "../../utils/validation.js";
 
-const categoryFieldsSchema =
+const baseCategoryFieldsSchema =
   z.strictObject({
     name: z
       .string()
@@ -23,9 +23,25 @@ const categoryFieldsSchema =
       .optional(),
   });
 
+const createCategoryFieldsSchema =
+  baseCategoryFieldsSchema.extend({
+    isActive: z
+      .boolean()
+      .default(true),
+  });
+
+const updateCategoryFieldsSchema =
+  baseCategoryFieldsSchema
+    .extend({
+    isActive: z
+      .boolean()
+      .optional(),
+    })
+    .partial();
+
 export const createCategorySchema =
   z.object({
-    body: categoryFieldsSchema,
+    body: createCategoryFieldsSchema,
   });
 
 export const updateCategorySchema =
@@ -34,8 +50,7 @@ export const updateCategorySchema =
       id: mongoIdSchema,
     }),
 
-    body: categoryFieldsSchema
-      .partial()
+    body: updateCategoryFieldsSchema
       .refine(
         (data) =>
           Object.keys(data).length > 0,
@@ -84,3 +99,8 @@ export type UpdateCategoryInput =
   z.infer<
     typeof updateCategorySchema
   >["body"];
+
+export type CategoryQuery =
+  z.infer<
+    typeof getCategoriesSchema
+  >["query"];
