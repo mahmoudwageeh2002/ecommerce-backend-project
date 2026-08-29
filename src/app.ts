@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 
 import { env } from "./config/env.js";
 
-import authRoutes from "./modules/auth/auth.routes.js";
+import routes from "./routes/index.js";
 
 import {
   notFoundHandler,
@@ -40,10 +40,7 @@ app.use(
 
 app.use(cookieParser());
 
-app.use(
-  "/api/v1/auth",
-  authRoutes,
-);
+app.use("/api/v1", routes);
 
 app.use(notFoundHandler);
 
