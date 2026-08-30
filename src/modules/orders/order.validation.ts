@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import {
+  addressSchema,
   mongoIdSchema,
   paginationQuerySchema,
 } from "../../utils/validation.js";
@@ -27,7 +28,10 @@ export const paymentMethodSchema = z.enum([
 
 export const createOrderSchema = z.object({
   body: z.strictObject({
-    addressId: mongoIdSchema,
+    addressId:
+      mongoIdSchema.optional(),
+
+    shippingAddress: addressSchema,
 
     paymentMethod:
       paymentMethodSchema,
@@ -133,7 +137,17 @@ export type UpdateOrderStatusInput =
     typeof updateOrderStatusSchema
   >["body"];
 
+export type CancelOrderInput =
+  z.infer<
+    typeof cancelOrderSchema
+  >["body"];
+
 export type OrdersQuery =
   z.infer<
     typeof getOrdersSchema
+  >["query"];
+
+export type AdminOrdersQuery =
+  z.infer<
+    typeof getAdminOrdersSchema
   >["query"];
