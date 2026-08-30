@@ -88,3 +88,8 @@ export type UpdateReviewInput =
   z.infer<
     typeof updateReviewSchema
   >["body"];
+
+export type ProductReviewsQuery =
+  z.infer<
+    typeof getProductReviewsSchema
+  >["query"];
