@@ -6,6 +6,28 @@ import {
   paginationQuerySchema,
 } from "../../utils/validation.js";
 
+const productImageSchema = z.strictObject({
+  url: z
+    .string()
+    .trim()
+    .url({
+      error: "Image URL must be valid",
+    }),
+
+  publicId: z
+    .string()
+    .trim()
+    .min(1)
+    .max(200)
+    .optional(),
+
+  alt: z
+    .string()
+    .trim()
+    .max(150)
+    .optional(),
+});
+
 const productFieldsSchema = z.strictObject({
   name: z
     .string()
@@ -61,6 +83,18 @@ const productFieldsSchema = z.strictObject({
       "out-of-stock",
     ])
     .default("draft"),
+
+  isFeatured: z
+    .boolean()
+    .default(false),
+
+  images: z
+    .array(productImageSchema)
+    .max(10, {
+      error:
+        "Product cannot have more than 10 images",
+    })
+    .default([]),
 });
 
 export const createProductSchema = z.object({
