@@ -36,6 +36,10 @@ export const validate =
           400,
           "Validation failed",
           errors,
+          {
+            code: "validation_failed",
+            hint: "Fix the highlighted fields and send the request again.",
+          },
         ),
       );
     }

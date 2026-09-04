@@ -4,6 +4,8 @@ import type {
   NextFunction,
 } from "express";
 
+import jwt from "jsonwebtoken";
+
 import { ApiError } from "../utils/ApiError.js";
 
 import {
@@ -28,6 +30,11 @@ export const authenticate = (
       new ApiError(
         401,
         "Authentication required",
+        undefined,
+        {
+          code: "missing_auth_token",
+          hint: "Send a bearer token in the Authorization header.",
+        },
       ),
     );
   }
@@ -40,6 +47,11 @@ export const authenticate = (
       new ApiError(
         401,
         "Authentication required",
+        undefined,
+        {
+          code: "missing_auth_token",
+          hint: "Send a bearer token in the Authorization header.",
+        },
       ),
     );
   }
@@ -55,11 +67,33 @@ export const authenticate = (
     };
 
     next();
-  } catch {
+  } catch (error) {
+    if (
+      error instanceof
+      jwt.TokenExpiredError
+    ) {
+      return next(
+        new ApiError(
+          401,
+          "Authentication token has expired.",
+          undefined,
+          {
+            code: "token_expired",
+            hint: "Please send a new bearer token or log in again.",
+          },
+        ),
+      );
+    }
+
     next(
       new ApiError(
         401,
         "Invalid or expired access token",
+        undefined,
+        {
+          code: "invalid_auth_token",
+          hint: "Please send a valid bearer token or log in again.",
+        },
       ),
     );
   }
