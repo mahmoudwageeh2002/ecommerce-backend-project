@@ -207,6 +207,11 @@ export const refresh = async (
     throw new ApiError(
       401,
       "Invalid or expired refresh token",
+      undefined,
+      {
+        code: "invalid_refresh_token",
+        hint: "Log in again to start a new session.",
+      },
     );
   }
 
@@ -224,6 +229,11 @@ export const refresh = async (
     throw new ApiError(
       401,
       "Invalid refresh token",
+      undefined,
+      {
+        code: "invalid_refresh_token",
+        hint: "Log in again to start a new session.",
+      },
     );
   }
 
@@ -292,6 +302,11 @@ export const refresh = async (
     throw new ApiError(
       401,
       "Refresh token is invalid or has already been used",
+      undefined,
+      {
+        code: "refresh_token_reused",
+        hint: "Log in again because this session was revoked.",
+      },
     );
   }
 

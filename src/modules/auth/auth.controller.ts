@@ -98,6 +98,11 @@ export const refreshToken = async (
     throw new ApiError(
       401,
       "Refresh token is required",
+      undefined,
+      {
+        code: "missing_refresh_token",
+        hint: "Log in again so the server can set a new refresh token cookie.",
+      },
     );
   }
 
@@ -157,6 +162,11 @@ export const logoutAll = async (
     throw new ApiError(
       401,
       "Authentication required",
+      undefined,
+      {
+        code: "missing_auth_token",
+        hint: "Send a bearer token in the Authorization header.",
+      },
     );
   }
 
